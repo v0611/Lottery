@@ -3,13 +3,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 public class Twitter {
 	static final int MAX_TWEET_LENGTH = 140;
-	static final int PREFIX_LENGTH = 14;
+	static final int PREFIX_LENGTH = 16;
 	static final int CHARS_PER_TWEET = MAX_TWEET_LENGTH - PREFIX_LENGTH;
 
+	//need enhancement for tweet thread longer than 9
+	
 	public static void main(String[] args) throws IOException {
 		String paragraph = readFile();
 		splitMethod(paragraph);
@@ -40,12 +41,15 @@ public class Twitter {
 
 		while (index < wordArray.length) {
 			StringBuilder output = new StringBuilder();
+			/*add word from wordArray to the new string builder until current character count 
+			and the next word dont exceed character limit per tweet */
 			while (index < wordArray.length && output.length() + wordArray[index].length() + 1 < CHARS_PER_TWEET) {
 				output.append(wordArray[index]);
 				output.append(" ");
 				index++;
 
 			}
+			//once character limit is met, add the stringbuilder to the list of tweet
 			currentTweetCount++;
 			tweets.add(output.toString() + String.format("(Tweet %d/%d)", currentTweetCount, totalTweet));
 
